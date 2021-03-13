@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TG_Web_Extraction", "TG_Web_Extraction\TG_Web_Extraction.csproj", "{86E5F5F6-E811-45A4-A8C1-EC00371373BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86E5F5F6-E811-45A4-A8C1-EC00371373BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86E5F5F6-E811-45A4-A8C1-EC00371373BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86E5F5F6-E811-45A4-A8C1-EC00371373BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86E5F5F6-E811-45A4-A8C1-EC00371373BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E89A8F31-6A16-476E-82DF-2C3F1C309827}
+	EndGlobalSection
+EndGlobal
