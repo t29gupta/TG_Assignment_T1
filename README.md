@@ -8,7 +8,7 @@
 1. Visual Studio 2019
 2. .Net5 installed
 
-## How to run :
+## How to run:
 1. Open the solution
 2. Run the default console project by the name TG_Web_Extraction
 3. Enter the location of the html file.
@@ -17,6 +17,9 @@
 ## Run Unit tests:
 1. Go to TG_Web_Extraction.Tests project
 2. Run all tests
+
+## My Approach:
+I'm relying on element Id's more than the class names as Id's tend to be unique. I went through the html file and extracted the Id's of the elements that I need to scrape from the page. I'm getting the elements by Id and then performing the required operations to extract the data from the element itself or from it's child components in some cases.
 
 ## Improvements 
 
