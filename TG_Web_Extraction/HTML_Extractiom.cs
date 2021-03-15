@@ -6,7 +6,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-
 using HtmlAgilityPack;
 
 namespace TG_Web_Extraction
@@ -110,6 +109,11 @@ namespace TG_Web_Extraction
             }
         }
 
+        /// <summary>
+        /// Extarct data through html File stream
+        /// </summary>
+        /// <param name="htmlfileStream">Stream object of the html file</param>
+        /// <returns></returns>
         public string HtmlExtractionFromStream(Stream htmlfileStream)
         {
             if (htmlfileStream == null)
@@ -122,6 +126,11 @@ namespace TG_Web_Extraction
             return Extractinfo(htmlDoc);
         }
 
+        /// <summary>
+        /// Extarct data through html File string content
+        /// </summary>
+        /// <param name="htmlContent">Html content passed as plain string</param>
+        /// <returns></returns>
         public string HtmlExtractionFromStringContent(string htmlContent)
         {
             if (htmlContent == null)
@@ -138,6 +147,9 @@ namespace TG_Web_Extraction
         {
             // Alternative Hotels
             var altHotelsElement = html.GetElementbyId(Alternative_hotels_Table_Id);
+            
+            // Alternative hotels are in form of table
+            // Extracting all 4 classes at once so that the query has to traverse through the collection only once
             var altHotelCollection = altHotelsElement?.Descendants("td")
                 .Select(p =>
                      p.Descendants()
@@ -215,6 +227,7 @@ namespace TG_Web_Extraction
 
             foreach (var roomCat in roomCategoriesRows)
             {
+                // Room categories first column has the type description in the tool tip of the images
                 var toolTip = roomCat[0].ChildNodes.Select(x => x.GetAttributeValue("title", "")).FirstOrDefault(t => !string.IsNullOrEmpty(t));
                 var roomCategoryName = roomCat[1].InnerText.Replace("\n", "");
 
