@@ -1,6 +1,7 @@
 # TG_Web_Extraction
 Web extractor for local html file. It is a console application
 The projects are in .Net5.
+I'm using HtmlAgilityPack for HTML dom operations
 
 ## Prerequisites:
 1. Visual Studio 2019
