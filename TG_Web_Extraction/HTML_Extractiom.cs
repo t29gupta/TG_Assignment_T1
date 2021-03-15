@@ -112,6 +112,11 @@ namespace TG_Web_Extraction
 
         public string HtmlExtractionFromStream(Stream htmlfileStream)
         {
+            if (htmlfileStream == null)
+            {
+                return "";
+            }
+
             var htmlDoc = new HtmlDocument();
             htmlDoc.Load(htmlfileStream);
             return Extractinfo(htmlDoc);
@@ -119,6 +124,11 @@ namespace TG_Web_Extraction
 
         public string HtmlExtractionFromStringContent(string htmlContent)
         {
+            if (htmlContent == null)
+            {
+                return "";
+            }
+            
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(htmlContent);
             return Extractinfo(htmlDoc);

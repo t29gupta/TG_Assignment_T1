@@ -110,40 +110,40 @@ namespace TG_Web_Extraction.Tests
             JsonElement element;
             if (jsonDoc.RootElement.TryGetProperty("HotelName", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "String");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "string");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("Address", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "String");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "string");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("ReviewPoint", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "Object");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "object");
             }
             if (jsonDoc.RootElement.TryGetProperty("Classification_Stars", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "String");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "string");
             }
             if (jsonDoc.RootElement.TryGetProperty("NoOfReviews", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "String");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "string");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("Description", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "String");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "string");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("RoomCategories", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "Array");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "array");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("AlternativeHotels", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "Array");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "array");
             }
         }
 
@@ -160,41 +160,59 @@ namespace TG_Web_Extraction.Tests
             JsonElement element;
             if (jsonDoc.RootElement.TryGetProperty("HotelName", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "null");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "null");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("Address", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "null");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "null");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("ReviewPoint", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "null");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "null");
             }
             if (jsonDoc.RootElement.TryGetProperty("Classification_Stars", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "String");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "string");
             }
             if (jsonDoc.RootElement.TryGetProperty("NoOfReviews", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "String");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "string");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("Description", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "String");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "string");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("RoomCategories", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "Array");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "array");
             }
 
             if (jsonDoc.RootElement.TryGetProperty("AlternativeHotels", out element))
             {
-                Assert.AreEqual(element.ValueKind.ToString(), "Array");
+                Assert.AreEqual(element.ValueKind.ToString().ToLower(), "array");
             }
+        }
+
+        [Test]
+        public void NullFileContent_ReturnsEmpty()
+        {
+            HTML_Extractiom extraction = new HTML_Extractiom();
+            var extractedData = extraction.HtmlExtractionFromStringContent(null);
+
+            Assert.IsEmpty(extractedData);
+        }
+
+        [Test]
+        public void NullFileStream_ReturnsEmpty()
+        {
+            HTML_Extractiom extraction = new HTML_Extractiom();
+            var extractedData = extraction.HtmlExtractionFromStream(null);
+
+            Assert.IsEmpty(extractedData);
         }
     }
 }
