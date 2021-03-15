@@ -12,10 +12,10 @@ namespace TG_Web_Extraction
         {
             Console.WriteLine("HQ Application for Task 1 : Web Extraction...\n\n");
 
-            HTML_Extractiom extractiom = new HTML_Extractiom();
+            HTML_Extractiom extraction = new HTML_Extractiom();
 
             string filePath = @"E:\Cloud Drives\OneDrive\Documents\HQ plus - Backend Development Assignment\HQ plus - Backend Development Assignment\Task 1\Kempinski Hotel Bristol Berlin, Germany - Booking.com.html";
-            var fileData = extractiom.ReadHtmlFile(filePath);
+            var fileData = extraction.ReadHtmlFile(filePath);
 
             if (string.IsNullOrEmpty(fileData.Item1))
             {
@@ -25,7 +25,7 @@ namespace TG_Web_Extraction
             }
 
             Console.WriteLine("\nExtracting information from the html file...\n");
-            var extractedData = extractiom.Extractinfo(fileData.Item1);
+            var extractedData = extraction.HtmlExtractionFromStringContent(fileData.Item1);
 
             Console.WriteLine("Extracted json...\n");
 

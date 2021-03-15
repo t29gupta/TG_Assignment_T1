@@ -83,25 +83,23 @@ namespace TG_Web_Extraction
 
         #endregion
 
-        public string Extractinfo(string htmlContent)
+        private string Extractinfo(HtmlDocument htmlDoc)
         {
             try
             {
                 BookingModel bmResult = new BookingModel();
 
-                HtmlDocument html = GetHtmlDocumentFromStringContent(htmlContent);
+                ExtractHotelName(bmResult, htmlDoc);
 
-                ExtractHotelName(bmResult, html);
+                ExtractHotelAddress(bmResult, htmlDoc);
 
-                ExtractHotelAddress(bmResult, html);
+                string reviewBest = ExtractHotelReviewsData(bmResult, htmlDoc);
 
-                string reviewBest = ExtractHotelReviewsData(bmResult, html);
+                ExtractHotelDescription(bmResult, htmlDoc);
 
-                ExtractHotelDescription(bmResult, html);
+                ExtractHotelRoomCategories(bmResult, htmlDoc);
 
-                ExtractHotelRoomCategories(bmResult, html);
-
-                ExtractAlternativeHotels(bmResult, html, reviewBest);
+                ExtractAlternativeHotels(bmResult, htmlDoc, reviewBest);
 
                 string resJson = JsonSerializer.Serialize(bmResult, new JsonSerializerOptions
                 {
@@ -117,21 +115,21 @@ namespace TG_Web_Extraction
             }
         }
 
-        private static HtmlDocument GetHtmlDocumentFromStream(Stream htmlfileStream)
+        public string HtmlExtractionFromStream(Stream htmlfileStream)
         {
-            var html = new HtmlDocument();
-            html.Load(htmlfileStream);
-            return html;
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.Load(htmlfileStream);
+            return Extractinfo(htmlDoc);
         }
 
-        private static HtmlDocument GetHtmlDocumentFromStringContent(string htmlContent)
+        public string HtmlExtractionFromStringContent(string htmlContent)
         {
-            var html = new HtmlDocument();
-            html.LoadHtml(htmlContent);
-            return html;
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(htmlContent);
+            return Extractinfo(htmlDoc);
         }
 
-        private static void ExtractAlternativeHotels(BookingModel bmResult, HtmlDocument html, string reviewBest)
+        private void ExtractAlternativeHotels(BookingModel bmResult, HtmlDocument html, string reviewBest)
         {
             // Alternative Hotels
             var altHotelsElement = html.GetElementbyId(Alternative_hotels_Table_Id);
@@ -186,7 +184,7 @@ namespace TG_Web_Extraction
             }
         }
 
-        private static void ExtractHotelRoomCategories(BookingModel bmResult, HtmlDocument html)
+        private void ExtractHotelRoomCategories(BookingModel bmResult, HtmlDocument html)
         {
             // Getting room categories
             var roomCategoriesElement = html.GetElementbyId(Room_Categories_Table_Id);
@@ -214,7 +212,7 @@ namespace TG_Web_Extraction
             }
         }
 
-        private static void ExtractHotelDescription(BookingModel bmResult, HtmlDocument html)
+        private void ExtractHotelDescription(BookingModel bmResult, HtmlDocument html)
         {
             // Getting description
             var descElement = html.GetElementbyId(Description_Id);
@@ -234,7 +232,7 @@ namespace TG_Web_Extraction
             bmResult.Description = sbDesc.ToString();
         }
 
-        private static string ExtractHotelReviewsData(BookingModel bmResult, HtmlDocument html)
+        private string ExtractHotelReviewsData(BookingModel bmResult, HtmlDocument html)
         {
 
             // Getting Hotel ReviewPoints and no of reviews
@@ -256,7 +254,7 @@ namespace TG_Web_Extraction
             return reviewBest;
         }
 
-        private static void ExtractHotelAddress(BookingModel bmResult, HtmlDocument html)
+        private void ExtractHotelAddress(BookingModel bmResult, HtmlDocument html)
         {
             // Getting Hotel Address
             var hotelAddressElement = html.GetElementbyId(Address_Id);
@@ -268,7 +266,7 @@ namespace TG_Web_Extraction
             bmResult.Address = hotelAddressElement?.InnerText.Replace("\n", "");
         }
 
-        private static void ExtractHotelName(BookingModel bmResult, HtmlDocument html)
+        private void ExtractHotelName(BookingModel bmResult, HtmlDocument html)
         {
             // Getting Hotel Name
             var hotelNameElement = html.GetElementbyId(HoltelName_Id);
