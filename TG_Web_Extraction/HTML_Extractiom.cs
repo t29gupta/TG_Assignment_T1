@@ -36,11 +36,6 @@ namespace TG_Web_Extraction
                     }
                 }
 
-                //using (var fileStream = File.OpenRead(fileLocation))
-                //{
-                //    GetHtmlDocumentFromStream(fileStream);
-                //}
-
                 var currentFolder = Path.GetDirectoryName(fileLocation);
 
                 return (File.ReadAllText(fileLocation), currentFolder);
@@ -133,7 +128,7 @@ namespace TG_Web_Extraction
         {
             // Alternative Hotels
             var altHotelsElement = html.GetElementbyId(Alternative_hotels_Table_Id);
-            var altHotelCollection = altHotelsElement.Descendants("td")
+            var altHotelCollection = altHotelsElement?.Descendants("td")
                 .Select(p =>
                      p.Descendants()
                     .Where(z =>
@@ -149,6 +144,10 @@ namespace TG_Web_Extraction
                 );
 
             bmResult.AlternativeHotels = new List<AltHotels>();
+            if (altHotelCollection == null)
+            {
+                return;
+            }
 
             foreach (var hotelRow in altHotelCollection)
             {
@@ -188,7 +187,7 @@ namespace TG_Web_Extraction
         {
             // Getting room categories
             var roomCategoriesElement = html.GetElementbyId(Room_Categories_Table_Id);
-            var roomCategoriesRows = roomCategoriesElement
+            var roomCategoriesRows = roomCategoriesElement?
                 .Descendants("tr")
                 .Select(i =>
                     i.Descendants("td")
@@ -198,6 +197,11 @@ namespace TG_Web_Extraction
                 .ToList();
 
             bmResult.RoomCategories = new List<RoomCategories>();
+
+            if (roomCategoriesRows == null)
+            {
+                return;
+            }
 
             foreach (var roomCat in roomCategoriesRows)
             {
@@ -216,7 +220,12 @@ namespace TG_Web_Extraction
         {
             // Getting description
             var descElement = html.GetElementbyId(Description_Id);
-            var descDecendents = descElement.ParentNode.Descendants("p").ToList();// descElement?.Descendants("p").ToList();
+            var descDecendents = descElement?.ParentNode?.Descendants("p").ToList();// descElement?.Descendants("p").ToList();
+
+            if (descDecendents == null)
+            {
+                return;
+            }
 
             StringBuilder sbDesc = new StringBuilder();
             foreach (var para in descDecendents)
@@ -239,19 +248,26 @@ namespace TG_Web_Extraction
             var reviewElement = html.GetElementbyId(Review_points_Block_Id);
             var reviewDecendents = reviewElement?.Descendants("span").ToList();
 
-            var reviewText = reviewDecendents.FirstOrDefault(x => x.HasClass(Review_points_Text_Class))?.InnerText.Replace("\n", "");
-            var reviewscore = reviewDecendents.FirstOrDefault(x => x.HasClass(Review_points_Score_Class))?.InnerText.Replace("\n", "");
-            var reviewBest = reviewDecendents.FirstOrDefault(x => x.HasClass(Review_points_OutOf_Class))?.InnerText.Replace("\n", "");
-            var reviewCount = reviewDecendents.FirstOrDefault(x => x.HasClass(Number_of_reviews_Parent))?.ChildNodes.FirstOrDefault(c => c.HasClass(Number_of_reviews))?.InnerText.Replace("\n", "");
+            var reviewText = reviewDecendents?.FirstOrDefault(x => x.HasClass(Review_points_Text_Class))?.InnerText.Replace("\n", "");
+            var reviewscore = reviewDecendents?.FirstOrDefault(x => x.HasClass(Review_points_Score_Class))?.InnerText.Replace("\n", "");
+            var reviewBest = reviewDecendents?.FirstOrDefault(x => x.HasClass(Review_points_OutOf_Class))?.InnerText.Replace("\n", "");
+            var reviewCount = reviewDecendents?.FirstOrDefault(x => x.HasClass(Number_of_reviews_Parent))?.ChildNodes.FirstOrDefault(c => c.HasClass(Number_of_reviews))?.InnerText.Replace("\n", "");
 
-            bmResult.ReviewPoint = new ReviewPoint
+            if (reviewText != null && reviewscore != null && reviewBest != null)
             {
-                Text = reviewText,
-                Score = $"{reviewscore}/{reviewBest}"
-            };
+                bmResult.ReviewPoint = new ReviewPoint
+                {
+                    Text = reviewText,
+                    Score = $"{reviewscore}/{reviewBest}"
+                };
+            }
 
-            bmResult.NoOfReviews = reviewCount;
-            return reviewBest;
+            if (reviewCount != null)
+            {
+                bmResult.NoOfReviews = reviewCount;
+            }
+
+            return reviewBest ?? "";
         }
 
         private void ExtractHotelAddress(BookingModel bmResult, HtmlDocument html)
