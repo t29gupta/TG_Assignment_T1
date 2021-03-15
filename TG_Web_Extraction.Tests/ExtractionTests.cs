@@ -8,11 +8,13 @@ namespace TG_Web_Extraction.Tests
     public class Tests
     {
         private string mockFilePath;
+        private HTML_Extractiom extraction;
 
         [SetUp]
         public void Setup()
         {
             mockFilePath = Path.Combine(AppContext.BaseDirectory, "MockFile.html");
+            extraction = new HTML_Extractiom();
         }
 
         [Test]
@@ -29,7 +31,6 @@ namespace TG_Web_Extraction.Tests
             var htmlFileContent = File.ReadAllText(mockFilePath);
 
             ///Act
-            HTML_Extractiom extraction = new HTML_Extractiom();
             var extractedData = extraction.HtmlExtractionFromStringContent(htmlFileContent);
 
             Assert.IsNotNull(extractedData);
@@ -50,7 +51,6 @@ namespace TG_Web_Extraction.Tests
             using (var htmlFileStream = File.OpenRead(mockFilePath))
             {
                 ///Act
-                HTML_Extractiom extraction = new HTML_Extractiom();
                 extractedData = extraction.HtmlExtractionFromStream(htmlFileStream);
             }
 
@@ -71,7 +71,6 @@ namespace TG_Web_Extraction.Tests
             var htmlFileContent = File.ReadAllText(mockFilePath);
 
             ///Act
-            HTML_Extractiom extraction = new HTML_Extractiom();
             var extractedData = extraction.HtmlExtractionFromStringContent(htmlFileContent);
 
             var jsonDoc = JsonDocument.Parse(extractedData);
@@ -102,7 +101,6 @@ namespace TG_Web_Extraction.Tests
             var htmlFileContent = File.ReadAllText(mockFilePath);
 
             ///Act
-            HTML_Extractiom extraction = new HTML_Extractiom();
             var extractedData = extraction.HtmlExtractionFromStringContent(htmlFileContent);
 
             var jsonDoc = JsonDocument.Parse(extractedData);
@@ -152,7 +150,6 @@ namespace TG_Web_Extraction.Tests
         {
             string htmlFileContent = "";
 
-            HTML_Extractiom extraction = new HTML_Extractiom();
             var extractedData = extraction.HtmlExtractionFromStringContent(htmlFileContent);
 
             var jsonDoc = JsonDocument.Parse(extractedData);
@@ -200,7 +197,6 @@ namespace TG_Web_Extraction.Tests
         [Test]
         public void NullFileContent_ReturnsEmpty()
         {
-            HTML_Extractiom extraction = new HTML_Extractiom();
             var extractedData = extraction.HtmlExtractionFromStringContent(null);
 
             Assert.IsEmpty(extractedData);
@@ -209,7 +205,6 @@ namespace TG_Web_Extraction.Tests
         [Test]
         public void NullFileStream_ReturnsEmpty()
         {
-            HTML_Extractiom extraction = new HTML_Extractiom();
             var extractedData = extraction.HtmlExtractionFromStream(null);
 
             Assert.IsEmpty(extractedData);
