@@ -18,20 +18,22 @@ namespace TG_Web_Extraction
             {
                 bool validFile = false;
                 var fileLocation = filePath;
-
-                while (!validFile)
+                if (string.IsNullOrEmpty(fileLocation))
                 {
-                    Console.WriteLine("Enter the location of the html file...");
-                    Console.WriteLine($@"e.g. <Drive:>\<Folder>\{Path.GetFileName(filePath)}");
-                    fileLocation = Console.ReadLine();
+                    while (!validFile)
+                    {
+                        Console.WriteLine("Enter the location of the html file...");
+                        Console.WriteLine($@"e.g. <Drive:>\<Folder>\{Path.GetFileName(filePath)}");
+                        fileLocation = Console.ReadLine();
 
-                    if (Path.GetExtension(fileLocation) == ".html" && File.Exists(fileLocation))
-                    {
-                        validFile = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("File not found or invalid file name entered");
+                        if (Path.GetExtension(fileLocation) == ".html" && File.Exists(fileLocation))
+                        {
+                            validFile = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("File not found or invalid file name entered");
+                        }
                     }
                 }
 
@@ -137,7 +139,7 @@ namespace TG_Web_Extraction
             {
                 return "";
             }
-            
+
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(htmlContent);
             return Extractinfo(htmlDoc);
@@ -147,7 +149,7 @@ namespace TG_Web_Extraction
         {
             // Alternative Hotels
             var altHotelsElement = html.GetElementbyId(Alternative_hotels_Table_Id);
-            
+
             // Alternative hotels are in form of table
             // Extracting all 4 classes at once so that the query has to traverse through the collection only once
             var altHotelCollection = altHotelsElement?.Descendants("td")

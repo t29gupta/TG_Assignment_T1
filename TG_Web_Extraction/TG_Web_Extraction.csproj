@@ -9,4 +9,10 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.31" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Kempinski Hotel Bristol Berlin, Germany - Booking.com.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

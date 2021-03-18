@@ -14,7 +14,11 @@ namespace TG_Web_Extraction
 
             HTML_Extractiom extraction = new HTML_Extractiom();
 
-            string filePath = @"E:\Cloud Drives\OneDrive\Documents\HQ plus - Backend Development Assignment\HQ plus - Backend Development Assignment\Task 1\Kempinski Hotel Bristol Berlin, Germany - Booking.com.html";
+            string filePath = Path.Combine(AppContext.BaseDirectory, "Kempinski Hotel Bristol Berlin, Germany - Booking.com.html");
+
+            Console.WriteLine($"Press enter to process current solution file at : {filePath}");
+            Console.ReadLine();
+            
             var fileData = extraction.ReadHtmlFile(filePath);
 
             if (string.IsNullOrEmpty(fileData.Item1))
