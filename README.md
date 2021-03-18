@@ -11,8 +11,9 @@
 ## How to run:
 1. Open the solution
 2. Run the default console project by the name TG_Web_Extraction
-3. Enter the location of the html file.
-4. Output is printed in the console window and saved in the same folder as input file.
+3. Press enter to process local solution file.
+4. If you want to use a custom file set the "string filePath=String.Empty". at line 17 in Program.cs file.
+5. Output is printed in the console window and saved in the same folder as input file.
 
 ## Run Unit tests:
 1. Go to TG_Web_Extraction.Tests project
